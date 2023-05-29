@@ -1,9 +1,9 @@
 require('dotenv').config()
 
 const USER_KEY = process.env.USER_KEY
-const ENDPOINT = "https://api2.ploomes.com/Orders?$expand=Products"
+const ENDPOINT = (index) => `https://api2.ploomes.com/Orders?$expand=Products&$top=300&$skip=${300*index}`
 
-const options = {
+const options =  {
     method: "get",
     headers: { 
         "Content-Type": "application/json",
@@ -13,21 +13,27 @@ const options = {
 }
 
 /**
- * @returns - Um array com produtos ({nome, codigo, valor})
+ * @returns - Um array com as vendas
  */
 async function getOrders() {
     let dados = []
 
-    const response = await fetch(ENDPOINT, options);
-    const responseJson = await response.json();
+    for (let index = 0; index < 1000; index++) {
+        const response = await fetch(ENDPOINT(index), options);
+        const responseJson = await response.json();
 
-    console.log(responseJson.value)
-    responseJson.value.forEach(venda => dados.push({
-        Numero: venda.OrderNumber,
-        Cliente: venda.ContactName,
-        Produtos: venda.Products
-    }))
+        if(responseJson.value.length == 0) 
+            break
     
+        responseJson.value.forEach(venda => dados.push({
+            Numero: venda.OrderNumber,
+            Cliente: venda.ContactName,
+            Produtos: venda.Products,
+            Total: venda.Amount,
+            Desconto: venda.Discount
+        })) 
+    }
+ 
     
     return dados
 }
