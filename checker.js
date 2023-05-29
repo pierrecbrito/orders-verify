@@ -2,9 +2,8 @@ const verify = (dadosDaVenda) => {
     let amount = dadosDaVenda.Total
     
     const reduce = (total, produto) =>  {
-        let totalidade = produto.Quantity * produto.UnitPrice
-        let desconto = produto.Discount/100 * totalidade //Aplicando desconto do produto
-        total += totalidade - desconto
+        let totalidade = produto.Total
+        total += totalidade
         return total
     }
 
@@ -12,13 +11,13 @@ const verify = (dadosDaVenda) => {
         reduce,
         0
     );
-    
+
     if(dadosDaVenda.Discount != null)
         amountProducts -= ((dadosDaVenda.Discount / 100) * amountProducts) //Aplicando desconto sob total
 
-    if(amount != amountProducts ) console.log(`${amount} - ${amountProducts}`)
+    if(amount != amountProducts && Math.ceil(amountProducts) != Math.ceil(amount) && Math.floor(amountProducts) != Math.floor(amount)) console.log(`${amount} - ${amountProducts}`)
 
-    return amount == amountProducts
+    return amount == amountProducts || Math.ceil(amountProducts) == Math.ceil(amount) || Math.floor(amountProducts) == Math.floor(amount)
 }
 
 
