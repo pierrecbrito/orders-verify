@@ -1,31 +1,8 @@
-require('dotenv').config()
+const reader = require('./readOrders')
 
-const USER_KEY = process.env.USER_KEY
-const ENDPOINT = "https://api2.ploomes.com/Orders?$expand=Products"
-
-const options = {
-    method: "get",
-    body: {},
-    headers: { 
-        "Content-Type": "application/json",
-        "User-Key" : USER_KEY
-    }
-    
+async function main() {
+    let dados = await reader.getOrders()
+    console.log(dados)
 }
 
-/**
- * @returns - Um array com produtos ({nome, codigo, valor})
- */
-async function ler() {
-    let dados = []
-
-
-
-    const response = await fetch(ENDPOINT, options);
-    const responseJson = await response.json();
-
-    console.log(responseJson.value)
-    
-    
-    return dados
-}
+main()
