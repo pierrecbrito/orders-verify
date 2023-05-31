@@ -15,9 +15,6 @@ const verify = (dadosDaVenda) => {
     if(dadosDaVenda.Desconto != null && dadosDaVenda.Desconto != 0 ) {
         amountProducts -= (dadosDaVenda.Desconto / 100) * amountProducts      
      }
-         //Aplicando desconto sob total
-
-    if(amount != amountProducts && Math.ceil(amountProducts) != Math.ceil(amount) && Math.floor(amountProducts) != Math.floor(amount)) console.log(`${amount} - ${amountProducts}`)
 
     return amount == amountProducts || Math.ceil(amountProducts) == Math.ceil(amount) || Math.floor(amountProducts) == Math.floor(amount)
 }
