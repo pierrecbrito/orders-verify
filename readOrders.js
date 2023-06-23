@@ -30,7 +30,9 @@ async function getOrders() {
             Cliente: venda.ContactName,
             Produtos: venda.Products,
             Total: venda.Amount,
-            Desconto: venda.Discount
+            Desconto: venda.Discount,
+            Mes: parseInt(venda.Date.substring(6, 7)),
+            Criador: venda.CreatorId
         })) 
     }
  
